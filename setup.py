@@ -6,11 +6,11 @@ from setuptools import find_packages, setup
 here = os.path.abspath(os.path.dirname(__file__))
 
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
-    long_description = "\\n" + fh.read()
+    long_description = fh.read()
 
 setup(
     name="quad5",
-    version="0.1.0",
+    version="0.1.6",
     description="""Quadratic Approximation custom step sampler for PYMC.""",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -22,9 +22,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=[
-       'PYMC==5.15.0'
-    ],
+    install_requires=["PYMC==5.15.0"],
     license="MIT",
     url="https://github.com/carsten-j/quad5",
 )
