@@ -1,0 +1,4 @@
+setuptools==70.0.0
+wheel==0.43.0
+twine==5.1.0
+black==24.4.2
