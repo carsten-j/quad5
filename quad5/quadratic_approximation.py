@@ -1,5 +1,5 @@
-import pymc as pm
 import numpy as np
+import pymc as pm
 from pymc.step_methods.arraystep import ArrayStep
 from pymc.util import get_value_vars_from_user_vars
 

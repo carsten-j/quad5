@@ -1,6 +1,7 @@
-from setuptools import setup, find_packages
 import codecs
 import os
+
+from setuptools import find_packages, setup
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -12,13 +13,13 @@ with open("requirements.txt") as f:
 
 setup(
     name="quad5",
-    version='{{VERSION_PLACEHOLDER}}',
+    version="0.1.0",
     description="""Quadratic Approximation custom step sampler for PYMC.""",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Carsten Jørgensen",
     packages=find_packages(include=["quad5"]),
-    keywords=['Bayesian Statistics', 'Probabalistic Programming Language', 'Python'],
+    keywords=["Bayesian Statistics", "Probabalistic Programming Language", "Python"],
     classifiers=[
         "Intended Audience :: PYMC users",
         "Programming Language :: Python :: 3",
