@@ -18,7 +18,6 @@ setup(
     packages=find_packages(include=["quad5"]),
     keywords=["Bayesian Statistics", "Probabalistic Programming Language", "Python"],
     classifiers=[
-        "Intended Audience :: PYMC users",
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
