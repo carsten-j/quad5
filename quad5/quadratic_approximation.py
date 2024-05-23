@@ -1,6 +1,5 @@
 import numpy as np
 import pymc as pm
-import scipy.stats as st
 from pymc.step_methods.arraystep import ArrayStep
 from pymc.util import get_value_vars_from_user_vars
 
@@ -48,6 +47,3 @@ class QuadraticApproximation(ArrayStep):
     def astep(self, q0, logp):
         sample = np.random.multivariate_normal(self.mode, self.covariance)
         return sample, []
-
-    def posterior(self):
-        return st.multivariate_normal(mean=self.mean, cov=self.covariance)
