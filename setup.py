@@ -10,7 +10,7 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
 
 setup(
     name="quad5",
-    version="0.1.6",
+    version="0.1.0",
     description="""Quadratic Approximation custom step sampler for PYMC.""",
     long_description=long_description,
     long_description_content_type="text/markdown",
