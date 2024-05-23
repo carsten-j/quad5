@@ -12,20 +12,25 @@ quad5 leverages [PYMC](https://www.pymc.io/welcome.html) and works by adding a c
 ## Word of warning
 This package is not production-grade code. It is primarily meant for educational purposes. Secondary for the author to learn more about the internals of the PYMC library.
 
-I am quite sure there will be valid PYMC models where this package not is able to produce a quadratic approximation for the posterior distribution. You are more than welcome to submit eihter PR's or createa issue for such cases.
+I am quite sure there will be valid PYMC models where this package not is able to produce a quadratic approximation for the posterior distribution. You are more than welcome to submit either a PR or create a issue for such cases.
 
 ## Example
+``` python
+        y = np.array([2642, 3503, 4358], dtype=np.float64)
 
+        with pm.Model() as m:
+            logsigma = pm.Uniform("logsigma", 1, 100)
+            mu = pm.Uniform("mu", 0, 10000)
+            _ = pm.Normal("y", mu=mu, sigma=pm.math.exp(logsigma), observed=y)
+            custom_step = QuadraticApproximation([mu, logsigma], m)
+            trace = pm.sample(draws=1000, chains=4, tune=100, step=custom_step)
+```
 
-add photo of model
+See more examples in this [notebook](https://colab.research.google.com/github/carsten-j/Rethinking/blob/main/chapter4.ipynb) with examples from chapter 4 in Statistical Rethinking.
 
-and summary
+[^1]: [The Bernstein-Von Mises Theorem](https://en.wikipedia.org/wiki/Bernstein%E2%80%93von_Mises_theorem) states that under some regularity conditions the posterior distribution is asymptotically normal. If the distribution is unimodal with most of the probability mass located symmetric around the peak then quite often you will get a faily good approximation using Quadratic Approximation.
 
-See more examples ...
+[^2]: This work is partly based on the Python package [pymc3-quap](https://github.com/rasmusbergpalm/pymc3-quap) but pymc3-quap is based on PYMC3 and a lot happend bewteen version 3 and 5 of PYMC. Optimizers works better when provided with a good initial guess and hence a (optional) starting point has been added to function arguments. Please see [Github](https://github.com/pymc-devs/pymc/issues/5443#issuecomment-1030609090) for a discussion about the differences between PYMC version 3 and 5 for computing the Hessian and in particular the for loop `for var in vars:` used when computing the Hessian.
 
-[^1]: The Bernstein-Von Mises Theorem states that under some regularity conditions 
-the posterior distribution is asymptotically normal. Unimodal , most of the probability mass is located symmetric around the peak
-
-[^2]: This work is partly based on the Python package [pymc3-quap](https://github.com/rasmusbergpalm/pymc3-quap) but pymc3-quap is based on PYMC3 and a lot happend bewteen version 3 and 5 of PYMC.
-
-[^3]:foo
+[^3]:The NumPyro documentation refers to "Automatic Guide Generation" and as I understand it this is a kind
+of variational inference of the posterior distribution.
