@@ -10,13 +10,17 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
 
 setup(
     name="quad5",
-    version="0.1.8",
+    version="0.1.9",
     description="""Quadratic Approximation custom step sampler for PYMC.""",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Carsten Jørgensen",
     packages=find_packages(include=["quad5"]),
-    keywords=["Bayesian Statistics", "Probabalistic Programming Language", "Python"],
+    keywords=[
+        "Bayesian Statistics",
+        "Probabalistic Programming Language",
+        "Python"
+    ],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
