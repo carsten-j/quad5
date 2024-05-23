@@ -34,7 +34,7 @@ I am quite sure there will be valid PYMC models where this package not is able t
         az.plot_posterior(trace)    
 ```
 
-![Posterior Distribution](posterior.png)
+![Posterior Distribution](https://github.com/carsten-j/quad5/blob/98d36e3a79434c226b70301165fc95f656a7334f/images/posterior.png)
 
 See more examples in this [notebook](https://colab.research.google.com/github/carsten-j/Rethinking/blob/main/chapter4.ipynb) with examples from chapter 4 in Statistical Rethinking.
 
