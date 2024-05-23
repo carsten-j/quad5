@@ -1,21 +1,20 @@
 import numpy as np
 import pymc as pm
+import scipy.stats as st
 from pymc.step_methods.arraystep import ArrayStep
 from pymc.util import get_value_vars_from_user_vars
 
 
 class QuadraticApproximation(ArrayStep):
-    def __init__(self, vars, model, **kwargs):
+    def __init__(self, vars, model, start=None, **kwargs):
         self.model = model
         self.vars = vars
         self.varnames = [var.name for var in vars]
 
-        # Compute mode and covariance
-        self.mode, self.covariance = self._compute_mode_and_covariance()
+        self.mode, self.covariance = self._compute_mode_and_covariance(start)
 
         vars = get_value_vars_from_user_vars(vars, model)
 
-        # Create necessary function sets for pymc
         super().__init__(vars, [self._logp_fn], **kwargs)
 
     def _point_to_array(self, point):
@@ -28,16 +27,15 @@ class QuadraticApproximation(ArrayStep):
         point = self._array_to_point(x)
         return self.model.logp(point)
 
-    def _compute_mode_and_covariance(self):
-        # Find the MAP estimate (mode of the posterior)
-        map = pm.find_MAP(vars=self.vars)
+    def _compute_mode_and_covariance(self, start=None):
+
+        map = pm.find_MAP(vars=self.vars, start=start)
 
         m = pm.modelcontext(None)
 
         for var in self.vars:
             if m.rvs_to_transforms[var] is not None:
                 m.rvs_to_transforms[var] = None
-                # change name so that we can use `map[var]` value
                 var_value = m.rvs_to_values[var]
                 var_value.name = var.name
 
@@ -48,6 +46,8 @@ class QuadraticApproximation(ArrayStep):
         return mean, cov
 
     def astep(self, q0, logp):
-        # Generate a sample from the multivariate Gaussian approximation
         sample = np.random.multivariate_normal(self.mode, self.covariance)
         return sample, []
+
+    def posterior(self):
+        return st.multivariate_normal(mean=self.mean, cov=self.covariance)
