@@ -16,15 +16,25 @@ I am quite sure there will be valid PYMC models where this package not is able t
 
 ## Example
 ``` python
+
+        import arviz as az
+        import numpy as np
+        import pymc as pm
+        import quad5 as quad5
+
         y = np.array([2642, 3503, 4358], dtype=np.float64)
 
         with pm.Model() as m:
             logsigma = pm.Uniform("logsigma", 1, 100)
             mu = pm.Uniform("mu", 0, 10000)
             _ = pm.Normal("y", mu=mu, sigma=pm.math.exp(logsigma), observed=y)
-            custom_step = QuadraticApproximation([mu, logsigma], m)
+            custom_step = quad5.QuadraticApproximation([mu, logsigma], m)
             trace = pm.sample(draws=1000, chains=4, tune=100, step=custom_step)
+
+        az.plot_posterior(trace)    
 ```
+
+![Posterior Distribution](posterior.png)
 
 See more examples in this [notebook](https://colab.research.google.com/github/carsten-j/Rethinking/blob/main/chapter4.ipynb) with examples from chapter 4 in Statistical Rethinking.
 
