@@ -1,12 +1,10 @@
-import codecs
-import os
+import pathlib
 
 from setuptools import find_packages, setup
 
-here = os.path.abspath(os.path.dirname(__file__))
+here = pathlib.Path(__file__).parent.resolve()
 
-with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
-    long_description = fh.read()
+long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="quad5",
